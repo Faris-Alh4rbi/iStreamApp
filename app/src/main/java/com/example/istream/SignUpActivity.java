@@ -45,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
             User user     = new User();
             user.fullName = fullName;
             user.username = username;
-            user.password = password;
+            user.passwordHash = PasswordHasher.hash(password);
             db.userDao().insert(user);
 
             Toast.makeText(this, "Account created! Please log in.", Toast.LENGTH_SHORT).show();

@@ -29,9 +29,9 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             AppDatabase db = AppDatabase.getInstance(this);
-            User user = db.userDao().login(username, password);
+            User user = db.userDao().findByUsername(username);
 
-            if (user != null) {
+            if (user != null && PasswordHasher.verify(password, user.passwordHash)) {
                 Intent intent = new Intent(this, HomeActivity.class);
                 intent.putExtra("USERNAME", username);
                 startActivity(intent);

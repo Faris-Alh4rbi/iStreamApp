@@ -19,6 +19,14 @@ public abstract class AppDatabase extends RoomDatabase {
                             AppDatabase.class, "istream_db")
                     .allowMainThreadQueries()
                     .build();
+
+            // Upgrade any accounts created by the original plaintext implementation.
+            UserDao users = instance.userDao();
+            for (User user : users.getAll()) {
+                if (!PasswordHasher.isHash(user.passwordHash)) {
+                    users.updatePasswordHash(user.id, PasswordHasher.hash(user.passwordHash));
+                }
+            }
         }
         return instance;
     }

@@ -1,6 +1,7 @@
 package com.example.istream;
 
 import androidx.room.Entity;
+import androidx.room.ColumnInfo;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "users")
@@ -9,5 +10,6 @@ public class User {
     public int id;
     public String fullName;
     public String username;
-    public String password;
+    @ColumnInfo(name = "password")
+    public String passwordHash;
 }
